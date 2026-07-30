@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>CARBOON RUN — Icon Sheet</title>
+<style>
+  body { background:#0e151c; color:#e6eef5; font-family:'Courier New',monospace; margin:0; padding:24px; }
+  h1 { color:#ffd166; font-size:20px; }
+  h2 { color:#06d6a0; font-size:15px; margin-top:28px; border-bottom:1px solid #2a3845; padding-bottom:6px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:14px; margin-top:14px; }
+  .cell { background:#16212b; border:1px solid #2a3845; border-radius:8px; padding:10px; text-align:center; }
+  .cell img { width:96px; height:96px; image-rendering:pixelated; background:
+    linear-gradient(45deg,#1c2733 25%,transparent 25%,transparent 75%,#1c2733 75%) 0 0/16px 16px,
+    linear-gradient(45deg,#1c2733 25%,#14202b 25%,#14202b 75%,#1c2733 75%) 8px 8px/16px 16px; border-radius:4px; }
+  .name { font-weight:700; margin-top:8px; font-size:13px; }
+  .meta { font-size:11px; color:#9fb0bd; margin-top:3px; line-height:1.4; }
+  .swatch { display:inline-block; width:9px; height:9px; border-radius:2px; vertical-align:middle; margin-right:4px; }
+</style>
+</head>
+<body>
+  <h1>CARBOON RUN — ICON SHEET</h1>
+  <p>18 extracted sprites (128×128, transparent). Pickups = floating LEEED credits; blockers = carbon blockers you dodge.</p>
+  <h2>Floating LEEED credits (pickups)</h2>
+  <div class="grid" id="pickups"></div>
+  <h2>Carbon blockers (dodged)</h2>
+  <div class="grid" id="blockers"></div>
+
+  <script>
+    const m = {
+  "pickups": {
+    "pickup-solar-pv.png": {
+      "name": "SOLAR PV",
+      "type": "solar",
+      "category": "EA",
+      "color": "#ffd166",
+      "desc": "EA CLEAN POWER ONSITE"
+    },
+    "pickup-wind-pwr.png": {
+      "name": "WIND PWR",
+      "type": "wind",
+      "category": "EA",
+      "color": "#e8eef2",
+      "desc": "EA RENEWABLE ENERGY"
+    },
+    "pickup-innovate.png": {
+      "name": "INNOVATE",
+      "type": "innov",
+      "category": "IN",
+      "color": "#c792ea",
+      "desc": "IN GOES BEYOND CODE"
+    },
+    "pickup-recycle.png": {
+      "name": "RECYCLE",
+      "type": "recycle",
+      "category": "MR",
+      "color": "#06d6a0",
+      "desc": "MR REUSES MATERIALS"
+    },
+    "pickup-rain-h2o.png": {
+      "name": "RAIN H2O",
+      "type": "rain",
+      "category": "WE",
+      "color": "#4fc3f7",
+      "desc": "WE SAVES TAP WATER"
+    },
+    "pickup-green-site.png": {
+      "name": "GREEN SITE",
+      "type": "leaf",
+      "category": "SS",
+      "color": "#5fd06a",
+      "desc": "SS PROTECTS HABITAT"
+    },
+    "pickup-clean-air.png": {
+      "name": "CLEAN AIR",
+      "type": "air",
+      "category": "EQ",
+      "color": "#aeeffb",
+      "desc": "EQ HEALTHY INDOORS"
+    }
+  },
+  "blockers": {
+    "blocker-concrete.png": {
+      "name": "CONCRETE",
+      "type": "mixer",
+      "color": "#f0a050",
+      "desc": "HIGH EMBODIED CO2"
+    },
+    "blocker-cement.png": {
+      "name": "CEMENT",
+      "type": "bag",
+      "color": "#d8d2c4",
+      "desc": "WORLD CO2 SOURCE"
+    },
+    "blocker-steel.png": {
+      "name": "STEEL",
+      "type": "beam",
+      "color": "#9aa3b0",
+      "desc": "COAL FIRED MAKING"
+    },
+    "blocker-fossil-fuel.png": {
+      "name": "FOSSIL FUEL",
+      "type": "barrel",
+      "color": "#c0392b",
+      "desc": "BURNS FOR ENERGY"
+    },
+    "blocker-coal.png": {
+      "name": "COAL",
+      "type": "pile",
+      "color": "#1a1a22",
+      "desc": "DIRTIEST FUEL"
+    },
+    "blocker-diesel.png": {
+      "name": "DIESEL",
+      "type": "pump",
+      "color": "#e0a040",
+      "desc": "FOUL ONSITE FUMES"
+    },
+    "blocker-co2.png": {
+      "name": "CO2",
+      "type": "cloud",
+      "color": "#5a5a66",
+      "desc": "PURE CARBON GAS"
+    },
+    "blocker-smog.png": {
+      "name": "SMOG",
+      "type": "smog",
+      "color": "#7a5a3a",
+      "desc": "HARMS LUNGS"
+    },
+    "blocker-smokestack.png": {
+      "name": "SMOKESTACK",
+      "type": "stack",
+      "color": "#6a6a74",
+      "desc": "FLUE GAS OUTLET"
+    },
+    "blocker-excavator.png": {
+      "name": "EXCAVATOR",
+      "type": "excav",
+      "color": "#f0a050",
+      "desc": "DIESEL MACHINE"
+    },
+    "blocker-carbon.png": {
+      "name": "CARBON",
+      "type": "block",
+      "color": "#2a2a32",
+      "desc": "CARBON LOCK IN"
+    }
+  }
+};
+    function cell(fn, info) {
+      const div = document.createElement('div'); div.className = 'cell';
+      div.innerHTML = '<img src="'+fn+'" alt="'+info.name+'">'+
+        '<div class="name">'+info.name+'</div>'+
+        '<div class="meta"><span class="swatch" style="background:'+info.color+'"></span>'+info.type+
+        (info.category?(' · '+info.category):'')+'<br>'+info.desc+'</div>';
+      return div;
+    }
+    const pk = document.getElementById('pickups'), bk = document.getElementById('blockers');
+    for (const fn in m.pickups) pk.appendChild(cell(fn, m.pickups[fn]));
+    for (const fn in m.blockers) bk.appendChild(cell(fn, m.blockers[fn]));
+  </script>
+</body>
+</html>
